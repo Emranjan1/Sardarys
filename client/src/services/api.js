@@ -1,5 +1,5 @@
 // src/services/api.js
-import axios from 'axios';
+/*import axios from 'axios';
 
 const apiClient = axios.create({
   baseURL: '/api',
@@ -27,7 +27,41 @@ apiClient.interceptors.response.use(
     return Promise.reject(error);
   }
 );
+*/
 
+import axios from 'axios';
+
+const baseURL = process.env.REACT_APP_API_URL;  // Directly use the environment variable
+
+const apiClient = axios.create({
+  baseURL: baseURL,
+});
+
+console.log("API baseURL:", baseURL);
+
+
+// Request interceptor to attach the token to every request if available
+apiClient.interceptors.request.use((config) => {
+  const token = localStorage.getItem('token');
+  if (token) {
+    config.headers['Authorization'] = `Bearer ${token}`;
+  }
+  return config;
+}, (error) => {
+  return Promise.reject(error);
+});
+
+apiClient.interceptors.response.use(
+  response => response,
+  error => {
+    if (error.response && error.response.status === 401) {
+      alert('Session has expired. Please log in again.');
+      localStorage.removeItem('token');
+      window.location.href = '/login';
+    }
+    return Promise.reject(error);
+  }
+);
 // api.js
 export const registerUser = async (userData) => {
   try {

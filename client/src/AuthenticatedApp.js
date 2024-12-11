@@ -29,8 +29,7 @@ const AuthenticatedApp = ({ basket, addToBasket, onOrderConfirm }) => {
     const { authToken, userDetails, logout } = useAuth();
 
     useEffect(() => {
-        console.log('AuthenticatedApp component mounted');
-        return () => console.log('AuthenticatedApp component unmounted');
+       // return () => console.log('AuthenticatedApp component unmounted');
     }, []);
     return (
         <>

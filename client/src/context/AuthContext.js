@@ -52,7 +52,6 @@ export const AuthProvider = ({ children }) => {
   }), [authToken, userDetails, login, logout]);
 
   useEffect(() => {
-    console.log('AuthProvider rendered or context value changed');
   }, [providerValue]);
 
   return (

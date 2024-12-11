@@ -3,7 +3,7 @@ const router = express.Router();
 const retry = require("async-retry");
 // const { client, ApiError } = require('../config/square');  // Corrected path to config directory
 const logger = require("../helpers/logger"); // Corrected path to helpers directory
-const { validatePaymentPayload } = require("../schemas/schema"); // Corrected path to schemas directory
+//const { validatePaymentPayload } = require("../schemas/schema"); // Corrected path to schemas directory
 const { Order, User, OrderItem, Product } = require("../models");
 
 const { Client } = require("square");

@@ -44,16 +44,32 @@ const CreateProduct = () => {
       formData.append('description', description);
       formData.append('image', image);
       formData.append('ageVerificationRequired', ageVerificationRequired);
-
+  
       const token = localStorage.getItem('token');
       await createProduct(formData, token);
       setMessage('Product created successfully');
+  
+      // Resetting form fields
+      setName('');
+      setPrice('');
+      setCategoryId('');
+      setDescription('');
+      setImage(null);
+      setAgeVerificationRequired(false);
+  
+      // Resetting file input via the DOM directly
+      document.getElementById('fileInput').value = '';
+  
       fetchData(); // Refresh the list after adding
+      console.log('States after reset:', { name, price, categoryId, description, image, ageVerificationRequired });
     } catch (error) {
       console.error('Error creating product:', error);
       setMessage('Product creation failed');
     }
   };
+  useEffect(() => {
+    console.log('Current states:', { name, price, categoryId, description, image, ageVerificationRequired });
+  }, [name, price, categoryId, description, image, ageVerificationRequired]);
 
   const handleDelete = async (productId) => {
     if (!authToken) {
@@ -93,35 +109,57 @@ const CreateProduct = () => {
   );
 
   return (
-    <div>
-      <h2>Create Product</h2>
-      <input type="text" placeholder="Name" onChange={(e) => setName(e.target.value)} />
-      <input type="text" placeholder="Price (£)" onChange={(e) => setPrice(e.target.value)} />
-      <select onChange={(e) => setCategoryId(e.target.value)}>
-        <option value="">Select Category</option>
-        {categories.map(category => (
-          <option key={category.id} value={category.id}>{category.name}</option>
-        ))}
-      </select>
-      <textarea placeholder="Description" onChange={(e) => setDescription(e.target.value)}></textarea>
-      <input type="file" onChange={(e) => setImage(e.target.files[0])} />
-      <label>
-        Age Verification Required:
-        <input
-          type="checkbox"
-          checked={ageVerificationRequired}
-          onChange={(e) => setAgeVerificationRequired(e.target.checked)}
-        />
-      </label>
-      <button onClick={handleCreateProduct}>Create Product</button>
-      <p>{message}</p>
-
-      <h2>Manage Products</h2>
+  <div>
+    <h2>Create Product</h2>
+    <input
+      type="text"
+      placeholder="Name"
+      value={name}  // Controlled component
+      onChange={(e) => setName(e.target.value)}
+    />
+    <input
+      type="text"
+      placeholder="Price (£)"
+      value={price}  // Controlled component
+      onChange={(e) => setPrice(e.target.value)}
+    />
+    <select
+      value={categoryId}  // Controlled component
+      onChange={(e) => setCategoryId(e.target.value)}
+    >
+      <option value="">Select Category</option>
+      {categories.map(category => (
+        <option key={category.id} value={category.id}>{category.name}</option>
+      ))}
+    </select>
+    <textarea
+      placeholder="Description"
+      value={description}  // Controlled component
+      onChange={(e) => setDescription(e.target.value)}
+    ></textarea>
+    <input
+      type="file"
+      id="fileInput"
+      onChange={(e) => setImage(e.target.files[0])}
+    />
+    <label>
+      Age Verification Required:
       <input
-        type="text"
-        placeholder="Search products..."
-        onChange={(e) => setSearchTerm(e.target.value)}
+        type="checkbox"
+        checked={ageVerificationRequired}  // Controlled component
+        onChange={(e) => setAgeVerificationRequired(e.target.checked)}
       />
+    </label>
+    <button onClick={handleCreateProduct}>Create Product</button>
+    <p>{message}</p>
+
+    <h2>Manage Products</h2>
+    <input
+      type="text"
+      placeholder="Search products..."
+      value={searchTerm}  // Controlled component
+      onChange={(e) => setSearchTerm(e.target.value)}
+    />
       <div className="product-list">
         {filteredProducts.map(product => (
           <div key={product.id} className="product-item">
