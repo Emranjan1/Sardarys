@@ -1,8 +1,14 @@
 # Dependency directories
 node_modules/
 
-# Optional: other common directories/files to ignore
+# Environment variables
 .env
+.env.local
+.env.production
+.env.development
+.env.test
+
+# Optional: other common directories/files to ignore
 dist/
 *.log
 *.cache
