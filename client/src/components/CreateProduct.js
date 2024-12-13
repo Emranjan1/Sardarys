@@ -61,12 +61,12 @@ const CreateProduct = () => {
       document.getElementById('fileInput').value = '';
   
       fetchData(); // Refresh the list after adding
-      console.log('States after reset:', { name, price, categoryId, description, image, ageVerificationRequired });
     } catch (error) {
       console.error('Error creating product:', error);
       setMessage('Product creation failed');
     }
   };
+
   useEffect(() => {
     console.log('Current states:', { name, price, categoryId, description, image, ageVerificationRequired });
   }, [name, price, categoryId, description, image, ageVerificationRequired]);
@@ -85,7 +85,6 @@ const CreateProduct = () => {
       setMessage(`Error deleting product: ${error.response ? error.response.data.message : error.message}`);
     }
   };
-  
 
   const handleToggleVisibility = async (productId) => {
     if (!authToken) {
@@ -95,71 +94,69 @@ const CreateProduct = () => {
     try {
       await toggleProductVisibility(productId, localStorage.getItem('token'));
       setMessage('Product visibility toggled');
-      // Do not filter out products, just refresh to show the updated state
       fetchData();
     } catch (error) {
       console.error('Error toggling product visibility:', error);
       setMessage('Failed to toggle visibility');
     }
   };
-  
 
   const filteredProducts = products.filter(product => 
     product.name.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
   return (
-  <div>
-    <h2>Create Product</h2>
-    <input
-      type="text"
-      placeholder="Name"
-      value={name}  // Controlled component
-      onChange={(e) => setName(e.target.value)}
-    />
-    <input
-      type="text"
-      placeholder="Price (£)"
-      value={price}  // Controlled component
-      onChange={(e) => setPrice(e.target.value)}
-    />
-    <select
-      value={categoryId}  // Controlled component
-      onChange={(e) => setCategoryId(e.target.value)}
-    >
-      <option value="">Select Category</option>
-      {categories.map(category => (
-        <option key={category.id} value={category.id}>{category.name}</option>
-      ))}
-    </select>
-    <textarea
-      placeholder="Description"
-      value={description}  // Controlled component
-      onChange={(e) => setDescription(e.target.value)}
-    ></textarea>
-    <input
-      type="file"
-      id="fileInput"
-      onChange={(e) => setImage(e.target.files[0])}
-    />
-    <label>
-      Age Verification Required:
+    <div>
+      <h2>Create Product</h2>
       <input
-        type="checkbox"
-        checked={ageVerificationRequired}  // Controlled component
-        onChange={(e) => setAgeVerificationRequired(e.target.checked)}
+        type="text"
+        placeholder="Name"
+        value={name}
+        onChange={(e) => setName(e.target.value)}
       />
-    </label>
-    <button onClick={handleCreateProduct}>Create Product</button>
-    <p>{message}</p>
+      <input
+        type="text"
+        placeholder="Price (£)"
+        value={price}
+        onChange={(e) => setPrice(e.target.value)}
+      />
+      <select
+        value={categoryId}
+        onChange={(e) => setCategoryId(e.target.value)}
+      >
+        <option value="">Select Category</option>
+        {categories.map(category => (
+          <option key={category.id} value={category.id}>{category.name}</option>
+        ))}
+      </select>
+      <textarea
+        placeholder="Description"
+        value={description}
+        onChange={(e) => setDescription(e.target.value)}
+      ></textarea>
+      <input
+        type="file"
+        id="fileInput"
+        onChange={(e) => setImage(e.target.files[0])}
+      />
+      <label>
+        Age Verification Required:
+        <input
+          type="checkbox"
+          checked={ageVerificationRequired}
+          onChange={(e) => setAgeVerificationRequired(e.target.checked)}
+        />
+      </label>
+      <button onClick={handleCreateProduct}>Create Product</button>
+      <p>{message}</p>
 
-    <h2>Manage Products</h2>
-    <input
-      type="text"
-      placeholder="Search products..."
-      value={searchTerm}  // Controlled component
-      onChange={(e) => setSearchTerm(e.target.value)}
-    />
+      <h2>Manage Products</h2>
+      <input
+        type="text"
+        placeholder="Search products..."
+        value={searchTerm}
+        onChange={(e) => setSearchTerm(e.target.value)}
+      />
       <div className="product-list">
         {filteredProducts.map(product => (
           <div key={product.id} className="product-item">
