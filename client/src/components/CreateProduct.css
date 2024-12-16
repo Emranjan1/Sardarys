@@ -1,4 +1,33 @@
-/* Assuming this CSS affects the CreateProduct component */
+.create-product-form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    max-width: 500px; /* Adjust the max-width to fit your design preference */
+    margin: 0 auto;
+}
+
+.create-product-form input,
+.create-product-form select,
+.create-product-form textarea,
+.create-product-form button {
+    width: 100%;
+    padding: 8px;
+    margin: 10px 0; /* Adds space between form elements */
+    box-sizing: border-box; /* Includes padding and border in the element's total width and height */
+}
+
+.create-product-form label {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin: 10px 0;
+}
+
+.create-product-form label input[type="checkbox"] {
+    margin-left: 10px;
+}
+
 .product-list {
     display: flex;
     flex-wrap: wrap;

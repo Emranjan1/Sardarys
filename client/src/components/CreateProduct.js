@@ -107,73 +107,75 @@ const CreateProduct = () => {
 
   return (
     <div>
-      <h2>Create Product</h2>
-      <input
-        type="text"
-        placeholder="Name"
-        value={name}
-        onChange={(e) => setName(e.target.value)}
-      />
-      <input
-        type="text"
-        placeholder="Price (£)"
-        value={price}
-        onChange={(e) => setPrice(e.target.value)}
-      />
-      <select
-        value={categoryId}
-        onChange={(e) => setCategoryId(e.target.value)}
-      >
-        <option value="">Select Category</option>
-        {categories.map(category => (
-          <option key={category.id} value={category.id}>{category.name}</option>
-        ))}
-      </select>
-      <textarea
-        placeholder="Description"
-        value={description}
-        onChange={(e) => setDescription(e.target.value)}
-      ></textarea>
-      <input
-        type="file"
-        id="fileInput"
-        onChange={(e) => setImage(e.target.files[0])}
-      />
-      <label>
-        Age Verification Required:
-        <input
-          type="checkbox"
-          checked={ageVerificationRequired}
-          onChange={(e) => setAgeVerificationRequired(e.target.checked)}
-        />
-      </label>
-      <button onClick={handleCreateProduct}>Create Product</button>
-      <p>{message}</p>
+        <h2>Create Product</h2>
+        <div className="create-product-form">
+            <input
+                type="text"
+                placeholder="Name"
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+            />
+            <input
+                type="text"
+                placeholder="Price (£)"
+                value={price}
+                onChange={(e) => setPrice(e.target.value)}
+            />
+            <select
+                value={categoryId}
+                onChange={(e) => setCategoryId(e.target.value)}
+            >
+                <option value="">Select Category</option>
+                {categories.map(category => (
+                    <option key={category.id} value={category.id}>{category.name}</option>
+                ))}
+            </select>
+            <textarea
+                placeholder="Description"
+                value={description}
+                onChange={(e) => setDescription(e.target.value)}
+            ></textarea>
+            <input
+                type="file"
+                id="fileInput"
+                onChange={(e) => setImage(e.target.files[0])}
+            />
+            <label>
+                Age Verification Required:
+                <input
+                    type="checkbox"
+                    checked={ageVerificationRequired}
+                    onChange={(e) => setAgeVerificationRequired(e.target.checked)}
+                />
+            </label>
+            <button onClick={handleCreateProduct}>Create Product</button>
+        </div>
+        <p>{message}</p>
 
-      <h2>Manage Products</h2>
-      <input
-        type="text"
-        placeholder="Search products..."
-        value={searchTerm}
-        onChange={(e) => setSearchTerm(e.target.value)}
-      />
-      <div className="product-list">
-        {filteredProducts.map(product => (
-          <div key={product.id} className="product-item">
-            <img src={`/${product.image}`} alt={product.name} className="product-image" />
-            <div className="product-info">
-              <strong>{product.name}</strong>
-              <p>£{product.price}</p>
-              <button onClick={() => handleToggleVisibility(product.id)}>
-                {product.isVisible ? 'Hide' : 'Show'}
-              </button>
-              <button onClick={() => handleDelete(product.id)}>Delete</button>
-            </div>
-          </div>
-        ))}
-      </div>
+        <h2>Manage Products</h2>
+        <input
+            type="text"
+            placeholder="Search products..."
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+        />
+        <div className="product-list">
+            {filteredProducts.map(product => (
+                <div key={product.id} className="product-item">
+                    <img src={`/${product.image}`} alt={product.name} className="product-image" />
+                    <div className="product-info">
+                        <strong>{product.name}</strong>
+                        <p>£{product.price}</p>
+                        <button onClick={() => handleToggleVisibility(product.id)}>
+                            {product.isVisible ? 'Hide' : 'Show'}
+                        </button>
+                        <button onClick={() => handleDelete(product.id)}>Delete</button>
+                    </div>
+                </div>
+            ))}
+        </div>
     </div>
-  );
+);
 };
 
 export default CreateProduct;

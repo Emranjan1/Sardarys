@@ -3,11 +3,12 @@ import { Link, useNavigate } from 'react-router-dom';
 import './Navbar.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faShoppingCart, faHome, faUser } from '@fortawesome/free-solid-svg-icons';
+import { useBasket } from '../context/BasketContext'; // Assuming this is the path to your context
 
-const Navbar = ({ onSearch, isLoggedIn, isAdmin, basket }) => {
+const Navbar = ({ onSearch, isLoggedIn, isAdmin}) => {
   const navigate = useNavigate();
   const [animate, setAnimate] = useState(false);
-
+  const { basket } = useBasket();
   useEffect(() => {
     if (basket.length > 0) {
       setAnimate(true);
@@ -28,6 +29,7 @@ const Navbar = ({ onSearch, isLoggedIn, isAdmin, basket }) => {
   };
 
   const handleBasketClick = () => {
+    console.log('Navigating to basket');
     navigate('/basket');
   };
 
