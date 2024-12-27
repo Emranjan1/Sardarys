@@ -3,6 +3,9 @@
 const router = require('express').Router();
 const { verifyToken, verifyAdmin } = require('../middleware/authenticationMiddleware');
 const { Order, User, OrderItem, Product } = require('../models'); // Correctly import OrderItem and Product
+const twilioClient = require('../config/twilioClient');
+const adminPhoneNumber = process.env.ADMIN_PHONE_NUMBER;  // Set this in your .env file
+const twilioNumber = process.env.TWILIO_PHONE_NUMBER;  // Your Twilio phone number also set in .env
 
 let dailySequence = 0;
 let lastDate = new Date().toISOString().slice(0, 10);  // Format as "YYYY-MM-DD"
@@ -45,8 +48,14 @@ router.post('/', verifyToken, async (req, res) => {
           orderId: order.id
       }));
       await OrderItem.bulkCreate(items);
-
-      res.status(201).json(order);
+ // Inside the try block where you create the order
+twilioClient.messages.create({
+  body: `New Order Alert! Order ID: ${order.orderNumber} has been created.`,
+  to: adminPhoneNumber,  // Use the admin phone number from environment
+  from: twilioNumber,  // Use the Twilio number from environment
+}).then(message => console.log('Order notification sent:', message.sid))
+  .catch(error => console.error('SMS sending failed:', error));
+res.status(201).json(order);
   } catch (error) {
       console.error('Error creating order:', error);
       res.status(500).json({ error: 'Internal server error' });

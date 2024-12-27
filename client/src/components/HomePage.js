@@ -37,7 +37,6 @@ const HomePage = ({ addToBasket, basket }) => {
         <div className="intro-text">
           <h1>Sardary's - Earl's Court</h1>
           <p>Household Goods · Grocery · Drinks</p>
-          <Link to="/infopage" className="info-button">Info map allergen and hygiene rating</Link>
         </div>
       </div>
       <div className="content-section">

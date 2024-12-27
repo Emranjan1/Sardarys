@@ -28,6 +28,7 @@ const deliveryRoutes = require('./routes/delivery');
 const adminSettingsRoutes = require('./routes/adminSettings');
 const promoCodeRoutes = require('./routes/promoCodes');
 const paymentRoute = require('./routes/payment');
+const twilioRoutes = require('./routes/twilioRoutes');  // Add this line
 
 
 // Use routes
@@ -43,6 +44,7 @@ app.use('/api/delivery', deliveryRoutes);
 app.use('/api/admin', adminSettingsRoutes);
 app.use('/api/promo-codes', promoCodeRoutes);
 app.use('/api/payment', paymentRoute);
+app.use('/api/twilio', twilioRoutes);  // Use the Twilio routes
 
 
 app.use('/api/*', (req, res) => {

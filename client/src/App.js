@@ -1,8 +1,8 @@
 import React from 'react';
 import { BrowserRouter as Router } from 'react-router-dom';
 import { AuthProvider } from './context/AuthContext';
-import { BasketProvider } from './context/BasketContext'; // Ensure this is correctly imported
-import AuthenticatedApp from './AuthenticatedApp'; // Import the AuthenticatedApp component
+import { BasketProvider } from './context/BasketContext';
+import AuthenticatedApp from './AuthenticatedApp';
 
 const App = () => {
     return (

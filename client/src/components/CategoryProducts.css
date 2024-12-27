@@ -1,77 +1,62 @@
 /* src/components/CategoryProducts.css */
-.category-products-container {
-    padding: 1rem;
+
+/* Ensure padding and margin of the container are adjusted */
+.container {
+    padding: 0 1rem; /* Adds 1rem padding to the left and right of the container */
+    margin: 0 auto; /* Keeps the container centered */
+    max-width: 100%; /* Ensures container can use up full width if needed */
+}
+
+.cp-container {
+    padding: 0.1rem; /* Minimal padding around the entire grid to keep cards closer to edge */
     background-color: #f4f4f4;
 }
 
-.product-list {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between; /* Ensure there's consistent spacing between items */
-}
-
-.product-item {
+.cp-product-card {
     border: 1px solid #ddd;
     border-radius: 8px;
-    padding: 10px;
-    margin: 0.5rem;
+    padding: 0.2rem;
     text-align: center;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    width: calc(33.333% - 1rem); /* Targets three items per row with appropriate spacing */
     position: relative;
+    margin-bottom: 0.2rem; /* Reduces space between cards */
 }
 
-.product-image {
+.cp-product-image {
     max-width: 100%;
     height: auto;
     border-radius: 8px;
     object-fit: contain;
 }
 
-.product-name {
+.cp-product-name {
     font-weight: bold;
-    margin: 5px 0;
-    white-space: nowrap;
+    margin-top: 5px;
     overflow: hidden;
     text-overflow: ellipsis;
+    line-height: 1.2;
 }
 
-.product-price {
+.cp-product-price {
     font-size: 0.85rem;
     color: #888;
     margin-bottom: 10px;
 }
 
-.product-item button {
+.cp-add-to-basket-button {
     padding: 5px;
-    width: 30px;
-    height: 30px;
-    border: 1px solid #ccc;
-    background-color: #eee;
-    color: #333;
-    border-radius: 50%;
-    position: absolute;
-    bottom: 10px;
-    right: 10px;
+    width: 100%;
+    border: none;
+    background-color: #007bff;
+    color: #fff;
+    border-radius: 4px;
     cursor: pointer;
 }
 
-@media (max-width: 900px) {
-    .product-item {
-        width: calc(50% - 1rem); /* Two items per row on medium screens */
-    }
-}
-
-@media (max-width: 600px) {
-    .product-item {
-        width: 100%; /* One item per row on small screens */
-    }
-}
-
-.back-button {
+.cp-back-button {
     margin-bottom: 1rem;
     padding: 0.5rem;
     border: none;
@@ -81,7 +66,7 @@
 }
 
 /* Modal styles */
-.modal {
+.cp-modal {
     position: fixed;
     top: 0;
     left: 0;
@@ -97,18 +82,17 @@
     transition: opacity 300ms, visibility 300ms;
 }
 
-.modal.active {
+.cp-modal.active {
     visibility: visible;
     opacity: 1;
 }
 
-.modal-content {
+.cp-modal-content {
     background: white;
     padding: 20px;
     border-radius: 8px;
     width: 90%;
-    max-width: 350px;
-    max-height: 90vh;
+    max-width: 400px;
     overflow-y: auto;
     position: relative;
     display: flex;
@@ -116,27 +100,27 @@
     align-items: center;
 }
 
-.modal-image {
+.cp-modal-image {
     width: 100%;
     margin-bottom: 20px;
 }
 
-.modal-name {
+.cp-modal-name {
     font-size: 1.5rem;
     font-weight: bold;
 }
 
-.modal-description {
+.cp-modal-description {
     font-size: 1rem;
 }
 
-.modal-price {
+.cp-modal-price {
     font-size: 1.25rem;
     color: #444;
     display: block;
 }
 
-.close-modal {
+.cp-close-modal {
     position: absolute;
     top: 10px;
     right: 10px;
@@ -144,7 +128,29 @@
     font-size: 24px;
 }
 
-.age-verification {
+.cp-age-verification {
     color: red;
     font-weight: bold;
+}
+
+/* Responsive grid adjustments */
+.row > div {
+    flex: 0 0 33.333%; /* Maintains 3 columns across all breakpoints */
+    max-width: 33.333%;
+    padding: 0.1rem; /* Reduces space between items */
+}
+
+/* Adjusting the grid's outer spacing to the wall */
+@media (max-width: 992px) {
+    .row {
+        padding-right: 0.5rem; /* Increases right padding */
+        padding-left: 0.5rem; /* Increases left padding */
+    }
+}
+
+@media (max-width: 576px) {
+    .row {
+        padding-right: 0.5rem; /* Consistent padding for smaller screens */
+        padding-left: 0.5rem;
+    }
 }

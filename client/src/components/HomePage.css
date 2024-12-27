@@ -50,26 +50,47 @@
 }
 
 .categories-list {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-around; /* Ensures even distribution of space around items */
+    display: grid;
+    grid-template-columns: repeat(2, 1fr); /* Always two columns regardless of screen size */
+    grid-gap: 1rem; /* Sets gap between grid items */
 }
 
 .category-link {
     display: flex;
     flex-direction: column; /* Stack image and text vertically */
     align-items: center; /* Center align items */
-    margin: 1rem;
     text-decoration: none; /* Remove underline from links */
     color: black; /* Ensures text is readable */
+    background: #fff; /* Sets a background color for each category box */
+    border-radius: 8px; /* Rounds the corners of the category boxes */
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2); /* Adds shadow for depth */
+    overflow: hidden; /* Ensures no overflow of content outside the borders */
+    height: 100%; /* Ensures all boxes are of the same height */
 }
 
 .category-image {
-    width: 100px; /* Fixed width for consistency */
-    height: 100px; /* Fixed height for square images */
-    border-radius: 8px;
-    margin-bottom: 0.5rem; /* Space between image and text */
+    width: 100%; /* Adjust image width to fill container */
+    height: auto; /* Adjust height to maintain aspect ratio */
+    object-fit: cover; /* Ensures image covers the area, could crop if necessary */
 }
+
+.category-name {
+    width: 100%; /* Ensures text container fills the link */
+    text-align: center; /* Centers text */
+    padding: 10px; /* Adds padding inside the text container */
+    flex-grow: 1; /* Makes text container grow to fill available space */
+    display: flex; /* Enables flexbox for the text container */
+    align-items: center; /* Centers text vertically */
+    justify-content: center; /* Centers text horizontally */
+}
+
+@media (max-width: 320px) {
+    .categories-list {
+        grid-template-columns: 1fr; /* Reverts to one column for very small screens */
+    }
+}
+
+
 
 .basket-container {
     border: 1px solid #ddd;

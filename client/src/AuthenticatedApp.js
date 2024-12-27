@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react';
+import { useNavigate } from 'react-router-dom'; // Import useNavigate hook
 import { useAuth } from './context/AuthContext';
 import { Routes, Route, Navigate } from 'react-router-dom';
 import Navbar from './components/Navbar';
@@ -24,16 +25,22 @@ import OrderSummary from './components/OrderSummary';
 import AdminOrdersView from './components/AdminOrdersView';
 import PaymentComponent from './components/PaymentComponent';
 
-
 const AuthenticatedApp = ({ basket, addToBasket, onOrderConfirm }) => {
     const { authToken, userDetails, logout } = useAuth();
+    const navigate = useNavigate(); // Use navigate hook
+
+    // Define onSearch function
+    const onSearch = (query) => {
+        navigate(`/search?q=${query}`);
+    };
 
     useEffect(() => {
-       // return () => console.log('AuthenticatedApp component unmounted');
+       // This can be used for component cleanup or other side effects
     }, []);
+
     return (
         <>
-            <Navbar isLoggedIn={!!authToken} isAdmin={userDetails?.isAdmin} onLogout={logout} basket={basket} />
+            <Navbar isLoggedIn={!!authToken} isAdmin={userDetails?.isAdmin} onLogout={logout} basket={basket} onSearch={onSearch} />
             <Routes>
                 <Route path="/login" element={<Login />} />
                 <Route path="/register" element={<Register />} />
