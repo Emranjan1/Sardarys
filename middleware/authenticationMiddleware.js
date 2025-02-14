@@ -1,0 +1,45 @@
+const jwt = require('jsonwebtoken');
+const db = require('../models'); 
+
+const verifyToken = async (req, res, next) => {
+  const authHeader = req.headers['authorization'];
+  if (!authHeader) {
+    console.error('Token is required');
+    return res.status(403).json({ error: 'Token is required' });
+  }
+
+  const token = authHeader.split(' ')[1];
+  console.log('Token received:', token); 
+
+  if (!token) {
+    console.error('Token missing');
+    return res.status(403).json({ error: 'Token is required' });
+  }
+
+  try {
+    const decoded = jwt.verify(token, 'sardaryisanidiot!11');
+    console.log('Decoded token:', decoded); 
+    const user = await db.User.findByPk(decoded.id); 
+    if (!user) {
+      console.error('Invalid Token');
+      return res.status(401).json({ error: 'Invalid Token' });
+    }
+
+    req.user = user; 
+    next();
+  } catch (error) {
+    console.error('Token verification failed', error);
+    return res.status(401).json({ error: 'Invalid Token' });
+  }
+};
+
+const verifyAdmin = (req, res, next) => {
+  if (req.user && req.user.isAdmin) {
+    next();
+  } else {
+    console.error('Admin access required');
+    return res.status(403).json({ error: 'Admin access required' });
+  }
+};
+
+module.exports = { verifyToken, verifyAdmin };
